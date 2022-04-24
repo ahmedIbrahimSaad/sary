@@ -12,7 +12,7 @@ import com.example.sarycatalog.R
 import com.example.sarycatalog.model.DataItem
 import javax.inject.Inject
 
-class ItemsAdapter @Inject constructor() :RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder>(){
+class ItemsAdapter  :RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder>(){
     class ItemsViewHolder (v: View):RecyclerView.ViewHolder(v){
         private val imageView: ImageView by lazy { v.findViewById(R.id.itemImageView) }
         // private val title:TextView by lazy { view.findViewById(R.id.title) }

@@ -14,7 +14,7 @@ import com.example.sarycatalog.model.DataItem
 import com.example.sarycatalog.model.ResultItemCatalogResponse
 import javax.inject.Inject
 
-class MenusAdapter @Inject constructor(): RecyclerView.Adapter<MenusAdapter.MenusViewHolder>() {
+class MenusAdapter : RecyclerView.Adapter<MenusAdapter.MenusViewHolder>() {
 
     private  lateinit var menuList :List<DataItem>
 
@@ -45,9 +45,9 @@ class MenusAdapter @Inject constructor(): RecyclerView.Adapter<MenusAdapter.Menu
         fun bind( dataItem: DataItem){
             if(!dataItem.name.isNullOrBlank())
             title.text=dataItem.name
-            if(!dataItem.image.isNullOrBlank())
+
             Glide.with(itemView)
-                .load(Uri.parse(dataItem.image))
+                .load(Uri.parse(dataItem.image?:"")).error(R.drawable.ic_launcher_foreground)
                 .into(imageView)
         }
     }

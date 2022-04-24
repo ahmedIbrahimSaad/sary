@@ -31,13 +31,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
-    @Inject
-    lateinit var adapter: MenusAdapter
-    @Inject
-    lateinit var itemsAdapter: ItemsAdapter
 
-    @Inject
-    lateinit var imageAdapter:ImageAdapter
 
     val viewModel : BannerViewModel by viewModels()
     private val catalogViewModel:CatalogViewModel by viewModels()
@@ -55,9 +49,11 @@ class HomeActivity : AppCompatActivity() {
 
     }
     private fun observeMenus(it: CatalogResponse?) {
-        adapter.setMenuList(it!!.result!![0]!!.data as List<DataItem>)
-        menuRecycler.adapter=adapter
-        for(a in it.result!!){
+        val menusAdapter= MenusAdapter()
+        menusAdapter.setMenuList(it!!.result!![0]!!.data as List<DataItem>)
+        menuRecycler.adapter=menusAdapter
+       val temp= it.result!!.subList(1,it.result!!.size)
+        for(a in temp){
 
             if(!a!!.title.isNullOrBlank()&& a.uiType in listOf("grid","linear","grid") && a.data!!.isNotEmpty()){
                 val title= TextView(this)
@@ -68,75 +64,91 @@ class HomeActivity : AppCompatActivity() {
 
                 when (a.uiType) {
                     "grid" -> {
-                        val rv = RecyclerView(this)
-                        val params = RecyclerView.LayoutParams(
-                            RecyclerView.LayoutParams.MATCH_PARENT,
-                            RecyclerView.LayoutParams.WRAP_CONTENT
-                        )
-                        rv.layoutParams = params
+                        if(a.data.isNotEmpty()){
+                            val itemsAdapter=ItemsAdapter()
+                            val rv = RecyclerView(this)
+                            val params = RecyclerView.LayoutParams(
+                                RecyclerView.LayoutParams.MATCH_PARENT,
+                                RecyclerView.LayoutParams.WRAP_CONTENT
+                            )
+                            rv.layoutParams = params
 
-                        val llm= GridLayoutManager(this,4)
-                        rv.layoutManager =llm
+                            val llm= GridLayoutManager(this,4)
+                            rv.layoutManager =llm
 
-                        itemsAdapter.setMenuList(a.data as List<DataItem>)
-                        rv.adapter = itemsAdapter
+                            itemsAdapter.setMenuList(a.data as List<DataItem>)
+                            rv.adapter = itemsAdapter
 
-                        generalLinearLayout.addView(rv)
-                        val v = View(this)
-                        v.layoutParams = LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            5
-                        )
-                        v.setBackgroundColor(Color.parseColor("#B3B3B3"))
+                            generalLinearLayout.addView(rv)
+                            val v = View(this)
+                            v.layoutParams = LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                5
+                            )
+                            v.setBackgroundColor(Color.parseColor("#B3B3B3"))
 
-                        generalLinearLayout.addView(v)
+                            generalLinearLayout.addView(v)
+                        }
+
                     }
                     "linear" -> {
-                        val rv = RecyclerView(this)
-                        val params = RecyclerView.LayoutParams(
-                            RecyclerView.LayoutParams.MATCH_PARENT,
-                            RecyclerView.LayoutParams.WRAP_CONTENT
-                        )
-                        rv.layoutParams = params
-                        val llm= LinearLayoutManager(this)
-                        llm.orientation= LinearLayoutManager.HORIZONTAL
-                        rv.layoutManager =llm
-                        itemsAdapter.setMenuList(a.data as List<DataItem>)
-                        rv.adapter = itemsAdapter
+                        if(a.data.isNotEmpty()){
+                            val itemsAdapter=MenusAdapter()
 
-                        generalLinearLayout.addView(rv)
-                        val v = View(this)
-                        v.layoutParams = LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            5
-                        )
-                        v.setBackgroundColor(Color.parseColor("#B3B3B3"))
+                            val rv = RecyclerView(this)
+                            val params = RecyclerView.LayoutParams(
+                                RecyclerView.LayoutParams.MATCH_PARENT,
+                                RecyclerView.LayoutParams.WRAP_CONTENT
+                            )
+                            rv.layoutParams = params
+                            val llm= LinearLayoutManager(this)
+                            llm.orientation= LinearLayoutManager.HORIZONTAL
+                            rv.layoutManager =llm
+                            itemsAdapter.setMenuList(a.data as List<DataItem>)
+                            rv.adapter = itemsAdapter
 
-                        generalLinearLayout.addView(v)
+                            generalLinearLayout.addView(rv)
+                            val v = View(this)
+                            v.layoutParams = LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                5
+                            )
+                            v.setBackgroundColor(Color.parseColor("#B3B3B3"))
+
+                            generalLinearLayout.addView(v)
+
+                        }
+
                     }
                     "slider" -> {
                         val images:MutableList<String> = ArrayList()
-                        if(!a.data[0]!!.image.isNullOrBlank()){
-                            images.add(a.data[0]!!.image!!)
+                        for(x in a.data)
+                            if(!x!!.image.isNullOrBlank()){
+                                images.add(x.image!!)
+                            }
+                        if(images.isNotEmpty()){
+                            val imageAdapter=ImageAdapter()
+
+                            val mViewPager =  ViewPager(this)
+                            val params = RecyclerView.LayoutParams(
+                                RecyclerView.LayoutParams.WRAP_CONTENT,
+                                180
+                            )
+                            mViewPager.layoutParams = params
+                            imageAdapter.setImageList(images)
+                            mViewPager.adapter = imageAdapter
+                            generalLinearLayout.addView(mViewPager)
+
+                            val v = View(this)
+                            v.layoutParams = LinearLayout.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                5
+                            )
+                            v.setBackgroundColor(Color.parseColor("#B3B3B3"))
+
+                            generalLinearLayout.addView(v)
+
                         }
-                        val mViewPager =  ViewPager(this)
-                        val params = RecyclerView.LayoutParams(
-                            RecyclerView.LayoutParams.WRAP_CONTENT,
-                            180
-                        )
-                        mViewPager.layoutParams = params
-                        imageAdapter.setImageList(images)
-                        mViewPager.adapter = imageAdapter
-                        generalLinearLayout.addView(mViewPager)
-
-                        val v = View(this)
-                        v.layoutParams = LinearLayout.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            5
-                        )
-                        v.setBackgroundColor(Color.parseColor("#B3B3B3"))
-
-                        generalLinearLayout.addView(v)
 
                     }
                 }

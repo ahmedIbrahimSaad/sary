@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import javax.inject.Inject
 
 
-class ImageAdapter @Inject constructor() : PagerAdapter() {
+class ImageAdapter : PagerAdapter() {
      private lateinit var sliderImageId :List<String>
 
     fun setImageList(sliderImageList :List<String>){
