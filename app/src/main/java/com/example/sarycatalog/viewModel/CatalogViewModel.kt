@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CatalogViewModel  @Inject constructor(private val catalogRepository: CatalogRepository) : ViewModel() {
-    var catalogs = catalogRepository.getCatalogs()
+    var catalogs = catalogRepository.catalogsLiveData
     init {
         viewModelScope.launch(Dispatchers.IO) {
             catalogRepository.refreshCatalogs()

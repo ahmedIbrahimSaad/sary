@@ -9,16 +9,12 @@ import javax.inject.Inject
 class BannerRepository @Inject constructor(
     private val bannersService: BannersService
 ) {
-  private val  bannersLiveData =MutableLiveData<BannersResponse>()
-    fun getBanners(): LiveData<BannersResponse> {
-        return bannersLiveData
-    }
-
+   val  bannersLiveData =MutableLiveData<BannersResponse>()
     suspend fun refreshBanners() {
         val banners: BannersResponse
         try {
             banners = bannersService.getBanners()
-            bannersLiveData.value = banners
+            bannersLiveData.postValue(banners)
         } catch (e: Exception) {
         }
 

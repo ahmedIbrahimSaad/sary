@@ -11,17 +11,14 @@ import javax.inject.Inject
 class CatalogRepository @Inject constructor(
     private val catalogService: CatalogService
 ) {
-    private val  catalogsLiveData = MutableLiveData<CatalogResponse>()
+     val  catalogsLiveData = MutableLiveData<CatalogResponse>()
 
-    fun getCatalogs(): LiveData<CatalogResponse> {
-        return catalogsLiveData
-    }
 
     suspend fun refreshCatalogs() {
         val catalogs: CatalogResponse
         try {
             catalogs = catalogService.getCatalog()
-            catalogsLiveData.value = catalogs
+            catalogsLiveData.postValue(catalogs)
         } catch (e: Exception) {
         }
 

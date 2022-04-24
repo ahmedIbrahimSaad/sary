@@ -12,9 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SaryCatalog">
-        <activity
-            android:name=".CatalogActivity"
-            android:exported="false" />
+
         <activity
             android:name=".HomeActivity"
             android:exported="true">

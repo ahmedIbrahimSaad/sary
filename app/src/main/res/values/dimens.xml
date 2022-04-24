@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_small">6dp</dimen>
+    <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_large">14dp</dimen>
+    <dimen name="margin_xLarge">30dp</dimen>
+    <dimen name="margin_xxLarge">40dp</dimen>
+    <dimen name="padding_tiny">10dp</dimen>
+
+</resources>
