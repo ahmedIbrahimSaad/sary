@@ -1,6 +1,5 @@
 package com.example.sarycatalog.datasource
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sarycatalog.model.BannersResponse
 import com.example.sarycatalog.network.BannersService

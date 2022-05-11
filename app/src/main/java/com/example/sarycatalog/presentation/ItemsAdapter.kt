@@ -28,7 +28,7 @@ class ItemsAdapter  :RecyclerView.Adapter<ItemsAdapter.ItemsViewHolder>(){
 
     private  lateinit var menuList :List<DataItem>
 
-    fun setMenuList( list :List<DataItem>){
+    fun setMenuList(list: List<DataItem>){
         menuList =list
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {

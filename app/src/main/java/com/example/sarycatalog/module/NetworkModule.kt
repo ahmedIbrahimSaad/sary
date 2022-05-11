@@ -12,7 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
-
+const val BASEURL="https://staging.sary.to/"
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -35,7 +35,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create())
-        .baseUrl("https://staging.sary.to/")
+        .baseUrl(BASEURL)
         .client(okHttpClient)
         .build()
 

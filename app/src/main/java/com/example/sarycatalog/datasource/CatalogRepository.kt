@@ -1,10 +1,7 @@
 package com.example.sarycatalog.datasource
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.sarycatalog.model.BannersResponse
 import com.example.sarycatalog.model.CatalogResponse
-import com.example.sarycatalog.network.BannersService
 import com.example.sarycatalog.network.CatalogService
 import javax.inject.Inject
 

@@ -1,6 +1,5 @@
 package com.example.sarycatalog
 
-import android.R
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -18,7 +17,6 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.example.sarycatalog.model.BannersResponse
 import com.example.sarycatalog.model.CatalogResponse
-import com.example.sarycatalog.model.DataItem
 import com.example.sarycatalog.presentation.ImageAdapter
 import com.example.sarycatalog.presentation.ItemsAdapter
 import com.example.sarycatalog.presentation.MenusAdapter
@@ -26,7 +24,6 @@ import com.example.sarycatalog.viewModel.BannerViewModel
 import com.example.sarycatalog.viewModel.CatalogViewModel
 import com.google.android.material.imageview.ShapeableImageView
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -41,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.sarycatalog.R.layout.activity_home)
+        setContentView(R.layout.activity_home)
         val actionBar: ActionBar? = supportActionBar
         actionBar!!.hide()
         viewModel.banners.observe(this) { observeResponse(it) }
@@ -50,17 +47,17 @@ class HomeActivity : AppCompatActivity() {
     }
     private fun observeMenus(it: CatalogResponse?) {
         val menusAdapter= MenusAdapter()
-        menusAdapter.setMenuList(it!!.result!![0]!!.data as List<DataItem>)
+        menusAdapter.setMenuList(it!!.result[0].data)
         menuRecycler.adapter=menusAdapter
-       val temp= it.result!!.subList(1,it.result!!.size)
+       val temp= it.result.subList(1,it.result.size)
         for(a in temp){
 
-            if(!a!!.title.isNullOrBlank()&& a.uiType in listOf("grid","linear","grid") && a.data!!.isNotEmpty()){
+            if(!a.title.isNullOrBlank()&& a.uiType in listOf("grid","linear","grid") && a.data.isNotEmpty()){
                 val title= TextView(this)
                 title.text=a.title
                 generalLinearLayout.addView(title)
             }
-            if(a.data!!.isNotEmpty()){
+            if(a.data.isNotEmpty()){
 
                 when (a.uiType) {
                     "grid" -> {
@@ -76,7 +73,7 @@ class HomeActivity : AppCompatActivity() {
                             val llm= GridLayoutManager(this,4)
                             rv.layoutManager =llm
 
-                            itemsAdapter.setMenuList(a.data as List<DataItem>)
+                            itemsAdapter.setMenuList(a.data)
                             rv.adapter = itemsAdapter
 
                             generalLinearLayout.addView(rv)
@@ -104,7 +101,7 @@ class HomeActivity : AppCompatActivity() {
                             val llm= LinearLayoutManager(this)
                             llm.orientation= LinearLayoutManager.HORIZONTAL
                             rv.layoutManager =llm
-                            itemsAdapter.setMenuList(a.data as List<DataItem>)
+                            itemsAdapter.setMenuList(a.data )
                             rv.adapter = itemsAdapter
 
                             generalLinearLayout.addView(rv)
@@ -123,8 +120,8 @@ class HomeActivity : AppCompatActivity() {
                     "slider" -> {
                         val images:MutableList<String> = ArrayList()
                         for(x in a.data)
-                            if(!x!!.image.isNullOrBlank()){
-                                images.add(x.image!!)
+                            if(!x.image.isNullOrBlank()){
+                                images.add(x.image)
                             }
                         if(images.isNotEmpty()){
                             val imageAdapter=ImageAdapter()

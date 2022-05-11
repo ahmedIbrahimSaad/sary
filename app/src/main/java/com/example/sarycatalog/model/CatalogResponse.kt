@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 data class CatalogResponse(
 
 	@Json(name ="result")
-	val result: List<ResultItemCatalogResponse?>? = null,
+	val result: List<ResultItemCatalogResponse> = ArrayList(),
 
 	@Json(name ="other")
 	val other: Other? = null,
@@ -144,7 +144,7 @@ data class ResultItemCatalogResponse(
 	val uiType: String? = null,
 
 	@Json(name ="data")
-	val data: List<DataItem?>? = null,
+	val data: List<DataItem> = ArrayList(),
 
 	@Json(name ="show_title")
 	val showTitle: Boolean? = null,
