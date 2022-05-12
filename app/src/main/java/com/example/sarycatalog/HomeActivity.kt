@@ -15,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
+import com.example.sarycatalog.Constants.GRID
+import com.example.sarycatalog.Constants.LINEAR
+import com.example.sarycatalog.Constants.SLIDER
 import com.example.sarycatalog.model.BannersResponse
 import com.example.sarycatalog.model.CatalogResponse
 import com.example.sarycatalog.presentation.ImageAdapter
@@ -60,35 +63,32 @@ class HomeActivity : AppCompatActivity() {
             if(a.data.isNotEmpty()){
 
                 when (a.uiType) {
-                    "grid" -> {
-                        if(a.data.isNotEmpty()){
-                            val itemsAdapter=ItemsAdapter()
-                            val rv = RecyclerView(this)
-                            val params = RecyclerView.LayoutParams(
-                                RecyclerView.LayoutParams.MATCH_PARENT,
-                                RecyclerView.LayoutParams.WRAP_CONTENT
-                            )
-                            rv.layoutParams = params
+                     GRID -> if(a.data.isNotEmpty()){
+                         val itemsAdapter=ItemsAdapter()
+                         val rv = RecyclerView(this)
+                         val params = RecyclerView.LayoutParams(
+                             RecyclerView.LayoutParams.MATCH_PARENT,
+                             RecyclerView.LayoutParams.WRAP_CONTENT
+                         )
+                         rv.layoutParams = params
 
-                            val llm= GridLayoutManager(this,4)
-                            rv.layoutManager =llm
+                         val llm= GridLayoutManager(this,4)
+                         rv.layoutManager =llm
 
-                            itemsAdapter.setMenuList(a.data)
-                            rv.adapter = itemsAdapter
+                         itemsAdapter.setMenuList(a.data)
+                         rv.adapter = itemsAdapter
 
-                            generalLinearLayout.addView(rv)
-                            val v = View(this)
-                            v.layoutParams = LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                5
-                            )
-                            v.setBackgroundColor(Color.parseColor("#B3B3B3"))
+                         generalLinearLayout.addView(rv)
+                         val v = View(this)
+                         v.layoutParams = LinearLayout.LayoutParams(
+                             ViewGroup.LayoutParams.MATCH_PARENT,
+                             5
+                         )
+                         v.setBackgroundColor(Color.parseColor("#B3B3B3"))
 
-                            generalLinearLayout.addView(v)
-                        }
-
-                    }
-                    "linear" -> {
+                         generalLinearLayout.addView(v)
+                     }
+                    LINEAR -> {
                         if(a.data.isNotEmpty()){
                             val itemsAdapter=MenusAdapter()
 
@@ -117,7 +117,7 @@ class HomeActivity : AppCompatActivity() {
                         }
 
                     }
-                    "slider" -> {
+                    SLIDER -> {
                         val images:MutableList<String> = ArrayList()
                         for(x in a.data)
                             if(!x.image.isNullOrBlank()){

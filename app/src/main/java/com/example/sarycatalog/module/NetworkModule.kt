@@ -1,6 +1,7 @@
 package com.example.sarycatalog.module
 
 import com.example.sarycatalog.BuildConfig
+import com.example.sarycatalog.HeaderInterceptor
 import com.example.sarycatalog.network.BannersService
 import com.example.sarycatalog.network.CatalogService
 import dagger.Module
@@ -23,11 +24,12 @@ object NetworkModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
+            .addInterceptor(loggingInterceptor).addInterceptor(HeaderInterceptor())
             .build()
     } else {
         OkHttpClient
             .Builder()
+            .addInterceptor(HeaderInterceptor())
             .build()
     }
 
